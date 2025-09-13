@@ -95,10 +95,14 @@ extension HomeController {
     }
     
     @objc private func didTapSettingsButton() {
+        navigationItem.backButtonTitle = R.Strings.Locations.settings
+        navigationController?.navigationBar.tintColor = R.Colors.primary
         navigationController?.pushViewController(SettingsController(), animated: true)
     }
     
     @objc private func didTapMapButton() {
+        navigationItem.backButtonTitle = R.Strings.Locations.selectCity
+        navigationController?.navigationBar.tintColor = R.Colors.primary
         navigationController?.pushViewController(LocationsController(), animated: true)
     }
 }

@@ -23,8 +23,7 @@ extension SettingsController {
     
     override func configureAppearance() {
        super.configureAppearance()
-        
-        navigationItem.title = "Settings"
+       
     }
 }
 

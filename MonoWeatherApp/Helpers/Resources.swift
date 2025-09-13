@@ -18,6 +18,11 @@ enum R {
             static let currentLocation = "Current Location"
             static let inSync = "in sync"
         }
+        
+        enum Locations {
+            static let selectCity = "Select City"
+            static let settings = "Settings"
+        }
     }
     
     enum Images {
@@ -30,6 +35,10 @@ enum R {
             
             static let sunrise = UIImage(systemName: "sunrise.fill")
             static let sunset = UIImage(systemName: "sunset.fill")
+        }
+        
+        enum Locations {
+            static let add = UIImage(systemName: "plus")
         }
     }
     
