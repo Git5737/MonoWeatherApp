@@ -7,44 +7,9 @@
 
 import UIKit
 
-enum Section: Int, CaseIterable {
-    case theme, feedback, about
-}
-
 class SettingsController: BaseController {
     
-    enum Section: Int, CaseIterable {
-        case theme, feedback, about
-        
-        var title: String {
-            switch self {
-            case .theme: return "Theme"
-            case .feedback: return "Feedback"
-            case .about: return "About"
-            }
-        }
-    }
-    
-    struct SettingItem {
-        let title: String
-        let subtitle: String?
-        var accessory: UITableViewCell.AccessoryType
-    }
-
-    var settings: [Section: [SettingItem]] = [
-        .theme: [
-            SettingItem(title: "Dark Theme", subtitle: "Join the Dark Side!", accessory: .none),
-            SettingItem(title: "Light Theme", subtitle: "Let There be Light!", accessory: .checkmark)
-        ],
-        .feedback: [
-            SettingItem(title: "Report an Issue", subtitle: "Facing an issue? Report and we’ll look into it.", accessory: .disclosureIndicator),
-            SettingItem(title: "Rate on App Store", subtitle: "Enjoying the app? Leave a review on the App Store.", accessory: .disclosureIndicator)
-        ],
-        .about: [
-            SettingItem(title: "About Weather", subtitle: "Read a bit more about the app.", accessory: .disclosureIndicator),
-            SettingItem(title: "The Team", subtitle: "Get to know the team that made Weather a reality.", accessory: .disclosureIndicator)
-        ]
-    ]
+    private var settings = SettingsData.settings
 
     private let tableView: UITableView = {
         let view = UITableView()

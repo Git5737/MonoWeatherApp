@@ -23,6 +23,32 @@ enum R {
             static let selectCity = "Select City"
             static let settings = "Settings"
         }
+        
+        enum Settings {
+            
+            static let themeHeader = "Theme"
+            static let feedbackHeader = "Feedback"
+            static let aboutHeader = "About"
+            
+
+            static let darkThemeTitle = "Dark Theme"
+            static let darkThemeSubtitle = "Join the Dark Side!"
+            
+            static let lightThemeTitle = "Light Theme"
+            static let lightThemeSubtitle = "Let There be Light!"
+            
+            static let reportIssueTitle = "Report an Issue"
+            static let reportIssueSubtitle = "Facing an issue? Report and we’ll look into it."
+            
+            static let rateTitle = "Rate on App Store"
+            static let rateSubtitle = "Enjoying the app? Leave a review on the App Store."
+            
+            static let aboutTitle = "About Weather"
+            static let aboutSubtitle = "Read a bit more about the app."
+            
+            static let teamTitle = "The Team"
+            static let teamSubtitle = "Get to know the team that made Weather a reality."
+        }
     }
     
     enum Images {

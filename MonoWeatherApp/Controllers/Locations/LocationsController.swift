@@ -9,11 +9,7 @@ import UIKit
 
 class LocationsController: BaseController {
     
-    private var cities: [(name: String, temp: String, desc: String, icon: UIImage?)] = [
-            ("Kyiv", "22°C", "Light Drizzle", UIImage(systemName: "sun.max")),
-            ("Lviv", "18°C", "Sunny", UIImage(systemName: "cloud.rain")),
-            ("Odesa", "25°C", "Sunny", UIImage(systemName: "cloud.sun"))
-        ]
+    private var cities = LocationData.cities
     
     private let tableView: UITableView = {
         let view = UITableView()
