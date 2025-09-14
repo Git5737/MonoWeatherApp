@@ -11,8 +11,12 @@ import UIKit
 
 class LocationsViewModel: ObservableObject {
     @Published var cities: [CityModel] = []
-    private let weatherService = WeatherService()
+    private let weatherService: WeatherService
     private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        self.weatherService = WeatherService(apiKey: Config.apiKey)
+    }
     
     func loadCities() {
         let coordinates = [

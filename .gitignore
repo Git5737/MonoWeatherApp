@@ -35,3 +35,5 @@ fastlane/test_output
 # Temporary & lock files
 *.swp
 *.lock
+
+Config.swift

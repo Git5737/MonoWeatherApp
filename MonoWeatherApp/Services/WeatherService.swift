@@ -11,8 +11,13 @@ import Foundation
 import UIKit
 
 class WeatherService {
-    private let apiKey = "368efd42891cd46482fae277ddd612c3"
+    private let apiKey: String
     private let baseURL = "https://api.openweathermap.org/data/2.5/weather"
+    
+    
+    init(apiKey: String) {
+        self.apiKey = apiKey
+    }
     
     func fetchWeather(lat: Float, lon: Float) -> AnyPublisher<CityModel, Error> {
             let urlString = "\(baseURL)?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric"
