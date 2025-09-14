@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController =  UINavigationController(rootViewController: HomeController())
         window?.makeKeyAndVisible()
+        
+        ThemeManager.shared.applyTheme(ThemeManager.shared.currentTheme)
     }
 }
 
