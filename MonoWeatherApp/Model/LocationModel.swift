@@ -7,10 +7,13 @@
 
 import UIKit
 
-struct LocationData {
-    static var cities: [(name: String, temp: String, desc: String, icon: UIImage?)] = [
-        ("Kyiv", "22°C", "Light Drizzle", UIImage(systemName: "sun.max")),
-        ("Lviv", "18°C", "Sunny", UIImage(systemName: "cloud.rain")),
-        ("Odesa", "25°C", "Sunny", UIImage(systemName: "cloud.sun"))
-    ]
+struct CityModel {
+    let name: String
+    let temp: String
+    let tempMin: String
+    let tempMax: String
+    let desc: String
+    let icon: UIImage?
+    let sunrise: Int
+    let sunset: Int
 }

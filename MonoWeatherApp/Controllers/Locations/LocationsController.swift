@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class LocationsController: BaseController {
     
-    private var cities = LocationData.cities
+    private let viewModel = LocationsViewModel()
+    private var cancellables = Set<AnyCancellable>()
     
     private let tableView: UITableView = {
         let view = UITableView()
@@ -27,13 +29,17 @@ class LocationsController: BaseController {
         return button
     }()
     
-    func addCity(name: String, temp: String, desc: String, icon: UIImage?) {
-            cities.append((name, temp, desc, icon))
-            tableView.reloadData()
+    private func bindViewModel() {
+        viewModel.$cities
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func didTapAddButton() {
-        addCity(name: "Kharkiv", temp: "22°C", desc: "Light Drizzle", icon: UIImage(systemName: "cloud.rain"))
+        viewModel.addCity(name: "Kharkiv", temp: "22°C", tempMin: "18°C", tempMax: "25°C", desc: "Light Drizzle", icon: UIImage(systemName: "cloud.rain"), sunrise: 1699999999, sunset: 1700039999)
     }
 }
 
@@ -68,6 +74,9 @@ extension LocationsController {
         tableView.estimatedRowHeight = 60
         
         addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        
+        bindViewModel()
+        viewModel.loadCities()
     }
 }
 
@@ -80,12 +89,12 @@ extension LocationsController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension LocationsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cities.count
+        return viewModel.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.reuseId, for: indexPath) as! CityCell
-        let city = cities[indexPath.row]
+        let city = viewModel.cities[indexPath.row]
         cell.configure(city: city.name, temp: city.temp, desc: city.desc, icon: city.icon)
         return cell
     }
