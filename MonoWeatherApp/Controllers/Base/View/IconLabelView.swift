@@ -46,6 +46,10 @@ class IconLabelView: BaseView {
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func updateValue(_ text: String) {
+        valueLabel.text = text
+    }
 }
 
 

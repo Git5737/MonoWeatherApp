@@ -39,7 +39,7 @@ class LocationsController: BaseController {
     }
     
     @objc private func didTapAddButton() {
-        viewModel.addCity(name: "Kharkiv", temp: "22°C", tempMin: "18°C", tempMax: "25°C", desc: "Light Drizzle", icon: UIImage(systemName: "cloud.rain"), sunrise: 1699999999, sunset: 1700039999)
+        viewModel.addCity(name: "Kharkiv", lat: 49.9935, lon: 36.2304, temp: "22°C", tempMin: "18°C", tempMax: "25°C", desc: "Light Drizzle", icon: "cloud.rain", sunrise: 1699999999, sunset: 1700039999)
     }
 }
 
@@ -83,7 +83,13 @@ extension LocationsController {
 
 // MARK: - UITableViewDelegate
 extension LocationsController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCity = viewModel.cities[indexPath.row]
     
+        UserDefaults.standard.set(selectedCity.lat, forKey: "selectedLat")
+        UserDefaults.standard.set(selectedCity.lon, forKey: "selectedLon")
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -95,7 +101,7 @@ extension LocationsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.reuseId, for: indexPath) as! CityCell
         let city = viewModel.cities[indexPath.row]
-        cell.configure(city: city.name, temp: city.temp, desc: city.desc, icon: city.icon)
+        cell.configure(city: city.name, temp: city.temp, desc: city.desc, icon: city.iconName)
         return cell
     }
 }

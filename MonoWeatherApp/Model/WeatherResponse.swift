@@ -10,9 +10,15 @@ import Foundation
 
 struct WeatherResponse: Codable {
     let name: String
+    let coord: Coord
     let main: Main
     let weather: [Weather]
     let sys: Sys
+}
+
+struct Coord: Codable {
+    let lat: Float
+    let lon: Float
 }
 
 struct Weather: Codable {

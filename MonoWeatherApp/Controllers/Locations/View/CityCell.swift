@@ -68,11 +68,11 @@ class CityCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(city: String, temp: String, desc: String, icon: UIImage?) {
+    func configure(city: String, temp: String, desc: String, icon: String?) {
         cityLabel.text = city
         tempLabel.text = temp
         descriptionLabel.text = desc
-        iconView.image = icon
+        iconView.image = UIImage(systemName: icon ?? "sun")
     }
 }
 
