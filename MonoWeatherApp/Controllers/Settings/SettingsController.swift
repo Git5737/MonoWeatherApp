@@ -15,17 +15,14 @@ class SettingsController: BaseController {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorStyle = .none
-        
         return view
     }()
-    
 }
 
 extension SettingsController {
     
     override func setupViews() {
         super.setupViews()
-        
         view.addSubview(tableView)
     }
     
@@ -41,13 +38,12 @@ extension SettingsController {
     }
     
     override func configureAppearance() {
-       super.configureAppearance()
-       
+        super.configureAppearance()
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
-        
         tableView.register(SettingsCell.self, forCellReuseIdentifier: "SettingsCell")
     }
 }
@@ -64,16 +60,35 @@ extension SettingsController: UITableViewDataSource {
         return settings[sec]?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sec = Section(rawValue: indexPath.section)!
         let item = settings[sec]![indexPath.row]
+        let section = Section(rawValue: indexPath.section)!
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
-        cell.configure(title: item.title, subtitle: item.subtitle ?? "", accessory: item.accessory)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "SettingsCell",
+            for: indexPath
+        ) as! SettingsCell
+       
+        cell.configure(title: item.title, subtitle: item.subtitle ?? "", accessory: .none)
+        
+        if section == .theme {
+            let currentTheme = ThemeManager.shared.currentTheme
+            if indexPath.row == 0 && currentTheme == .dark {
+                cell.accessoryType = .checkmark
+            } else if indexPath.row == 1 && currentTheme == .light {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+        }
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView,
+                   titleForHeaderInSection section: Int) -> String? {
         Section(rawValue: section)?.title
     }
 }
@@ -81,24 +96,16 @@ extension SettingsController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SettingsController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let sec = Section(rawValue: indexPath.section)!
         
         switch sec {
         case .theme:
-            // Приклад: оновлюємо галочку
-            for i in 0..<settings[.theme]!.count {
-                settings[.theme]![i].accessory = (i == indexPath.row) ? .checkmark : .none
-            }
+            ThemeManager.shared.currentTheme = (indexPath.row == 0) ? .dark : .light
             tableView.reloadSections(IndexSet(integer: Section.theme.rawValue), with: .automatic)
-            
-            if indexPath.row == 0 {
-                ThemeManager.shared.currentTheme = .dark
-            } else {
-                ThemeManager.shared.currentTheme = .light
-            }
             
         case .feedback:
             if indexPath.row == 0 {
@@ -116,4 +123,3 @@ extension SettingsController: UITableViewDelegate {
         }
     }
 }
-
