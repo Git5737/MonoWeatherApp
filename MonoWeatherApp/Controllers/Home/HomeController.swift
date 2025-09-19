@@ -31,6 +31,8 @@ class HomeController: BaseController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 5
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.layoutMargins = UIEdgeInsets(top: 3, left: 12, bottom: 3, right: 12)
         return stack
     }()
     
