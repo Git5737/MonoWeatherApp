@@ -123,6 +123,49 @@ class InfoView: BaseView {
         
         return stack
     }()
+    
+    func updateTemperature(_ temperature: String) {
+        let attributedString = NSMutableAttributedString(string: temperature)
+        
+        attributedString.addAttributes([
+            .font: R.Fonts.helveticaRegular(with: 98)
+        ], range: NSRange(location: 0, length: temperature.count - 2))
+        
+        if let unitRange = temperature.range(of: "°C") {
+            let nsRange = NSRange(unitRange, in: temperature)
+            attributedString.addAttributes([
+                .font: R.Fonts.helveticaRegular(with: 40)
+            ], range: nsRange)
+        }
+        
+        tempLabel.attributedText = attributedString
+    }
+    
+    func updateWeatherIcon(_ systemName: String) {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 128, weight: .regular, scale: .medium)
+        weatherIcon.image = UIImage(systemName: systemName, withConfiguration: configuration)
+    }
+    
+    func updateWeatherTitle(_ title: String) {
+        weatherTitle.text = title
+    }
+    
+    func updateMinMaxTemp(min: String, max: String) {
+        tempDown.updateValue(min)
+        tempUp.updateValue(max)
+    }
+    
+    func updateSunTimes(sunriseTime: String, sunsetTime: String) {
+        sunrise.updateValue(sunriseTime)
+        sunset.updateValue(sunsetTime)
+    }
+    
+    func updateDate(_ date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM yyyy"  // "Friday, 25 December 2025"
+        dataLabel.text = formatter.string(from: date)
+    }
+    
 }
 
 extension InfoView{
@@ -143,7 +186,7 @@ extension InfoView{
         
         weatherStack.addArrangedSubview(weatherIcon)
         weatherStack.addArrangedSubview(weatherTitle)
-    
+        
         stack.addArrangedSubview(weatherStack)
         
         sunStack.addArrangedSubview(sunrise)
